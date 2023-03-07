@@ -62,6 +62,12 @@
 </head>
 
 <body>
+  
+  <div class="page-head text-3xl font-bold p-2">
+    <span class="current-page-no text-lg"></span>
+    <span class="current-page-subject"></span>
+    <span class="current-page-createDate text-lg"></span>
+  </div>
 
   <div id="viewer-1"></div>
 
@@ -110,20 +116,30 @@
       const toHTMLRenderers = {
         katex(node) {
           console.log("HI");
-
           let html = katex.renderToString(node.literal, {
             throwOnError: false
           });
 
-          return [
-            { type: "openTag", tagName: "div", outerNewLine: true },
-            { type: "html", content: html },
-            { type: "closeTag", tagName: "div", outerNewLine: true }
+          return [{
+            type: "openTag",
+            tagName: "div",
+            outerNewLine: true
+          },
+          {
+            type: "html",
+            content: html
+          },
+          {
+            type: "closeTag",
+            tagName: "div",
+            outerNewLine: true
+          }
           ];
         }
       };
-
-      return { toHTMLRenderers };
+      return {
+        toHTMLRenderers
+      };
     }
 
     const viewer1MarkdownSource = "로딩중...";
@@ -133,11 +149,15 @@
       viewer: true,
       initialValue: viewer1MarkdownSource,
       plugins: [
-        [toastui.Editor.plugin.codeSyntaxHighlight, { highlighter: Prism }],
+        [toastui.Editor.plugin.codeSyntaxHighlight, {
+          highlighter: Prism
+        }],
         katexPlugin,
         [
           toastui.Editor.plugin.uml,
-          { rendererURL: "http://www.plantuml.com/plantuml/svg/" }
+          {
+            rendererURL: "http://www.plantuml.com/plantuml/svg/"
+          }
         ]
       ]
     });
@@ -173,8 +193,6 @@
     } else {
       $('.list > li:first-child > a').click();
     }
-
-
   </script>
 
 </body>
